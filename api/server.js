@@ -6,10 +6,14 @@ const express = require('express')
 const itemListingRoutes = require('./routes/listings')
 //import mongoose
 const mongoose = require('mongoose')
+//import cors to fix cors
+const cors = require('cors')
 
 
 //express app
-const app = express()
+const app = express();
+//use cors
+app.use(cors());
 
 //global middleware to log requests
 app.use(express.json())
