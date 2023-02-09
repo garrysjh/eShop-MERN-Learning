@@ -6,7 +6,9 @@ const Listing = require('../models/listingModel')
 const {
     getAllListings,
     getListing,
-    createListing
+    createListing,
+    deleteListing,
+    updateListing
 } = require('../controllers/listingController')
 //invoke router
 const router = express.Router()
@@ -22,12 +24,10 @@ router.get('/:id', getListing)
 router.post('/post', createListing)
 
 //delete a listing
-router.delete('/:id', (req, res)=>{
-    res.json({msg: 'DELETE a listing'})
-})
+router.delete('/:id', deleteListing)
 
 //update a listing
-router.patch('/:id', (req, res)=>{
-    res.json({msg: 'MODIFY a listing'})
-})
+router.patch('/:id', updateListing)
+
+
 module.exports = router

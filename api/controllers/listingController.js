@@ -43,14 +43,49 @@ const createListing = async(req, res)=>{
 
 
 //delete listings
+const deleteListing = async(req, res) =>{
+    //take id from request
+    const {id} = req.params
+    //check if id is valid
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(400).json({error: 'ID invalid!'})
+    }
+
+    //find listing and delete
+    const listing = await Listing.findOneAndDelete({_id: id})
+    //if listing not found then...
+    if(!listing) {
+        return res.status(404).json({error: 'Listing not found'})
+    }
+    //otherwise, return status 200 and listing deleted
+    res.status(200).json(listing)
+}
 
 //update a listing
+const updateListing = async(req, res) => {
+    //take id from request
+    const {id} = req.params
+    //check if listing is valid
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(400).json({error: 'ID invalid!'})
+    }
+    const listing = await Listing.findOneAndUpdate({_id: id}, {
+        ...req.body
+    })
 
+    if(!listing) {
+        return res.status(404).json({error: 'Listing not found'})
+    }
+
+    res.status(200).json(listing)
+}
 
 //export 
 
 module.exports = {
     getAllListings,
     getListing,
-    createListing
+    createListing,
+    deleteListing,
+    updateListing
 }
