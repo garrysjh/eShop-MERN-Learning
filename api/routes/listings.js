@@ -2,31 +2,24 @@
 const express = require('express')
 //import workouts model
 const Listing = require('../models/listingModel')
+//import controllers for routing
+const {
+    getAllListings,
+    getListing,
+    createListing
+} = require('../controllers/listingController')
 //invoke router
 const router = express.Router()
 
 //api endpoints
 //get all item listings
-router.get('/', (req, res) =>{
-    res.json({msg: "GET all workouts"})
-})
+router.get('/', getAllListings)
 
 //get single listing
-router.get('/:id', (req, res) => {
-    res.json({msg: 'GET a single listing'})
-})
+router.get('/:id', getListing)
 
 //post a new listing
-router.post('/post', async (req, res)=>{
-    const {title, price, description} = req.body
-
-    try {
-        const listing = await Listing.create({title, price, description})
-        res.status(200).json(listing)
-    } catch(error){
-        res.status(400).json({error: error.message})
-    }
-})
+router.post('/post', createListing)
 
 //delete a listing
 router.delete('/:id', (req, res)=>{
