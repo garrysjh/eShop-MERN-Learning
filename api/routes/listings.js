@@ -1,5 +1,7 @@
 //import express 
 const express = require('express')
+//import workouts model
+const Listing = require('../models/listingModel')
 //invoke router
 const router = express.Router()
 
@@ -15,8 +17,15 @@ router.get('/:id', (req, res) => {
 })
 
 //post a new listing
-router.post('/post', (req, res)=>{
-    res.json({msg: 'POST a listing'})
+router.post('/post', async (req, res)=>{
+    const {title, price, description} = req.body
+
+    try {
+        const listing = await Listing.create({title, price, description})
+        res.status(200).json(listing)
+    } catch(error){
+        res.status(400).json({error: error.message})
+    }
 })
 
 //delete a listing
