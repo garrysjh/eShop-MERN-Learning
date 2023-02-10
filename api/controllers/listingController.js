@@ -32,6 +32,21 @@ const getListing = async(req, res)=>{
 const createListing = async(req, res)=>{
     //take these 3 variables from request body
     const {title, price, description} = req.body
+    //check for empty fields
+    let emptyFields = []
+
+    if(!title){
+        emptyFields.push('title')
+    }
+    if(!price){
+        emptyFields.push('price')
+    }
+    if(!description){
+        emptyFields.push('description')
+    }
+    if(emptyFields.length > 0) {
+        return res.status(400).json({ error: 'Please fill in all the fields', emptyFields})
+    }
     //add doc to db
     try {
         const listing = await Listing.create({title, price, description})

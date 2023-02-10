@@ -21,7 +21,7 @@ router.get('/', getAllListings)
 router.get('/:id', getListing)
 
 //post a new listing
-router.post('/post', createListing)
+router.post('/', createListing)
 
 //delete a listing
 router.delete('/:id', deleteListing)
